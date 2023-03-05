@@ -1,13 +1,34 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import { useProducts } from '../../contexts/productsContext';
+import { getProductById } from '../../services/products';
 
 import { Row, Col, Card, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import shippingImg from '../../assets/ic_shipping_small.png';
 
 export function ProductList(props) {
-    const { products } = useProducts();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const { products, setProductSelected } = useProducts();
     const shippingTooltipImgRef = useRef();
+
+    const navigate = useNavigate();
+
+    const handleProductClick = (productId) => {
+
+        setLoading(true);
+
+        getProductById({ id: productId })
+            .then((response) => {              
+                setProductSelected(response);
+                navigate(`/items/${productId}`);
+            })
+            .catch((error) => setError(error))
+            .finally(() => setLoading(false));
+    };
 
     return (
         <Row>
@@ -15,14 +36,14 @@ export function ProductList(props) {
                 <Card style={{ width: '100%' }}>
                     <ListGroup variant="flush">
 
-                        {products.map((currentProduct, currentProductIndex) => {
+                        {products.map((currentProduct, _) => {
                             const { thumbnail, title, id, price, shipping, address } = currentProduct;
                             const { free_shipping } = shipping;
                             const { city_name } = address;
-
+                          
                             return (
                                 <ListGroup.Item key={id}>
-                                    <Card border="light">
+                                    <Card border="light" onClick={() => handleProductClick(id)} style={{ cursor: 'pointer' }}>
                                         <Row>
                                             <Col>
                                                 <Image rounded src={thumbnail} alt={title} />

@@ -16,8 +16,9 @@ export function ProductList(props) {
                     <ListGroup variant="flush">
 
                         {products.map((currentProduct, currentProductIndex) => {
-                            const { thumbnail, title, id, price, shipping } = currentProduct;
+                            const { thumbnail, title, id, price, shipping, address } = currentProduct;
                             const { free_shipping } = shipping;
+                            const { city_name } = address;
 
                             return (
                                 <ListGroup.Item key={id}>
@@ -26,7 +27,7 @@ export function ProductList(props) {
                                             <Col>
                                                 <Image rounded src={thumbnail} alt={title} />
                                             </Col>
-                                            <Col lg={10} sm={12}>
+                                            <Col lg={8} sm={12}>
                                                 <Card.Title>
                                                     $ {price}
                                                     {
@@ -44,6 +45,9 @@ export function ProductList(props) {
                                                 <Card.Text>
                                                     {title}
                                                 </Card.Text>
+                                            </Col>
+                                            <Col lg={2} sm={12}>
+                                                {city_name}
                                             </Col>
                                         </Row>
                                     </Card>

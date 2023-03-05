@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { useProducts } from '../../contexts/productsContext';
-import { getProductById } from '../../services/products';
+import { getProductById, getDescriptionByProductId } from '../../services/products';
 
 import { Row, Col, Card, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -12,21 +12,33 @@ export function ProductList(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const { products, setProductSelected } = useProducts();
+    const { products, productSelected, setProductSelected } = useProducts();
     const shippingTooltipImgRef = useRef();
 
     const navigate = useNavigate();
 
-    const handleProductClick = (productId) => {
-
+    const handleProductClick = async (productId) => {
         setLoading(true);
 
-        getProductById({ id: productId })
-            .then((response) => {              
-                setProductSelected(response);
+        await Promise.all([
+            getProductById({ id: productId }),
+            getDescriptionByProductId({ id: productId })
+        ])
+            .then((results) => {
+                let productUpdated = {
+                    product: {},
+                    details: {}
+                };
+
+                results.map((current, index) => {
+                    if (index === 0) productUpdated['product'] = current;
+                    if (index === 1) productUpdated['details'] = current;
+                });
+
+                setProductSelected(productUpdated);
                 navigate(`/items/${productId}`);
             })
-            .catch((error) => setError(error))
+            .catch(error => setError(error))
             .finally(() => setLoading(false));
     };
 
@@ -40,7 +52,7 @@ export function ProductList(props) {
                             const { thumbnail, title, id, price, shipping, address } = currentProduct;
                             const { free_shipping } = shipping;
                             const { city_name } = address;
-                          
+
                             return (
                                 <ListGroup.Item key={id}>
                                     <Card border="light" onClick={() => handleProductClick(id)} style={{ cursor: 'pointer' }}>

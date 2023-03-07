@@ -7,8 +7,10 @@ import { Row, Col, Card, ListGroup, Image, OverlayTrigger, Tooltip } from 'react
 import { useProducts } from '../../contexts/productsContext';
 import shippingImg from '../../assets/ic_shipping_small.png';
 
-export function ProductList({ products, ...props }) {
-    const { setProductSelected } = useProducts();
+import { isObjectEmpty } from '../../utilities/isObjectEmpty';
+
+export function ProductList({ ...props }) {
+    const { products, setProductSelected } = useProducts();
     const shippingTooltipImgRef = useRef();
     const navigate = useNavigate();
 
@@ -21,50 +23,54 @@ export function ProductList({ products, ...props }) {
     };
 
     return (
-        <Row>
-            <Col>
-                <Card >
-                    <ListGroup variant="flush">
-                        {products.map((currentProduct) => {
-                            const { picture, title, id, price, free_shipping } = currentProduct;
-                            // const { city_name } = address;
+        <>
+            {
+                !isObjectEmpty(products) &&
+                <Row>
+                    <Col>
+                        <Card >
+                            <ListGroup variant="flush">
+                                {products.items.map((currentProduct) => {
+                                    const { picture, title, id, price, free_shipping } = currentProduct;
+                                    // const { city_name } = address;
 
-                            return (
-                                <ListGroup.Item key={id}>
-                                    <Card border="light" onClick={() => handleProductClick(id)} style={{ cursor: 'pointer' }}>
-                                        <Row>
-                                            <Col>
-                                                <Image rounded src={picture} alt={title} />
-                                            </Col>
-                                            <Col lg={8} sm={12}>
-                                                <Card.Title>
-                                                    $ {price.amount}
-                                                    {
-                                                        free_shipping &&
-                                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Este producto tiene envio gratis</Tooltip>}>
-                                                            <span className="d-inline-block">
-                                                                <Image
-                                                                    ref={shippingTooltipImgRef}
-                                                                    roundedCircle
-                                                                    src={shippingImg} />
-                                                            </span>
-                                                        </OverlayTrigger>
-                                                    }
-                                                </Card.Title>
-                                                <Card.Text>
-                                                    {title}
-                                                </Card.Text>
-                                            </Col>
-                                            <Col lg={2} sm={12}>
-                                                {/* {city_name} */}
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                </ListGroup.Item>)
-                        })}
-                    </ListGroup>
-                </Card>
-            </Col>
-        </Row>
-    )
+                                    return (
+                                        <ListGroup.Item key={id}>
+                                            <Card border="light" onClick={() => handleProductClick(id)} style={{ cursor: 'pointer' }}>
+                                                <Row>
+                                                    <Col>
+                                                        <Image rounded src={picture} alt={title} />
+                                                    </Col>
+                                                    <Col lg={8} sm={12}>
+                                                        <Card.Title>
+                                                            $ {price.amount}
+                                                            {
+                                                                free_shipping &&
+                                                                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Este producto tiene envio gratis</Tooltip>}>
+                                                                    <span className="d-inline-block">
+                                                                        <Image
+                                                                            ref={shippingTooltipImgRef}
+                                                                            roundedCircle
+                                                                            src={shippingImg} />
+                                                                    </span>
+                                                                </OverlayTrigger>
+                                                            }
+                                                        </Card.Title>
+                                                        <Card.Text>
+                                                            {title}
+                                                        </Card.Text>
+                                                    </Col>
+                                                    <Col lg={2} sm={12}>
+                                                        {/* {city_name} */}
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+                                        </ListGroup.Item>)
+                                })}
+                            </ListGroup>
+                        </Card>
+                    </Col>
+                </Row>
+            }
+        </>)
 }

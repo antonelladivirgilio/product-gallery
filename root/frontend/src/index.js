@@ -1,6 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
+
+import { Results } from './pages/Results';
+import { ProductDetails } from './pages/ProductDetails';
+import { NotFound } from './pages/NotFound';
+import { ErrorBoundary } from './pages/ErrorBoundary';
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+// import Root, { rootLoader } from "./routes/root";
 
 import { ProductsProvider } from './contexts/productsContext';
 
@@ -10,12 +21,40 @@ import reportWebVitals from './reportWebVitals';
 import './scss/main.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorBoundary />,
+    children: [
+      {
+        path: "/items/*",
+        element: <Results />,
+        errorElement: <ErrorBoundary />,
+      }, {
+        path: "/items/:id",
+        element: <ProductDetails />,
+        errorElement: <ErrorBoundary />,
+        // loader: rootLoader
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+        errorElement: <ErrorBoundary />,
+        // loader: rootLoader
+      },
+    ],
+    // loader: rootLoader
+  }
+]);
+
 root.render(
   <React.StrictMode>
     <ProductsProvider>
-      <BrowserRouter>
+      <RouterProvider router={router}>
         <App />
-      </BrowserRouter>
+      </RouterProvider>
     </ProductsProvider>
   </React.StrictMode>
 );

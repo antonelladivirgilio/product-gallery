@@ -10,18 +10,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { useProducts } from '../../contexts/productsContext';
-import { getProducts, getProductById } from '../../services/products';
+import { getProducts } from '../../services/products';
 
 import Logo from '../../assets/logo.png';
 import MagnifierSmall from '../../assets/magnifier_small.png';
 
-import axios from 'axios';
-
 export function SearchBox() {
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState();
     const { _, setProducts } = useProducts();
     const navigate = useNavigate();
 
@@ -39,18 +36,21 @@ export function SearchBox() {
         backgroundColor: "#ffe600"
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-
-        const response = await getProducts({ product: inputValue });
-        const { categories, items } = response.data;
-        setProducts({ categories, items });
-        navigate('/items?search=');
-    };
-
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (inputValue) {
+            
+            const response = await getProducts({ product: inputValue });
+            const { categories, items } = response.data;
+            setProducts({ categories, items });
+            
+            navigate('/items?search=');
+        }
     };
 
     return (
@@ -77,7 +77,6 @@ export function SearchBox() {
                                     </InputGroup>
                                 </Form>
                             </Col>
-
                         </Row>
                     </Container>
                 </Col>

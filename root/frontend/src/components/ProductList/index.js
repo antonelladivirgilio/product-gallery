@@ -1,28 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { useProducts } from '../../contexts/productsContext';
 import { getProductById } from '../../services/products';
 
 import { Row, Col, Card, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
-
+import { useProducts } from '../../contexts/productsContext';
 import shippingImg from '../../assets/ic_shipping_small.png';
 
-export function ProductList(props) {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-
-    const { products, productSelected, setProductSelected } = useProducts();
+export function ProductList({ products, ...props }) {
+    const { setProductSelected } = useProducts();
     const shippingTooltipImgRef = useRef();
-
     const navigate = useNavigate();
 
     const handleProductClick = async (productId) => {
-        setLoading(true);
-
         const response = await getProductById({ id: productId });
 
-        const {item} = response.data;
+        const { item } = response.data;
         setProductSelected(item);
         navigate(`/items/${productId}`);
     };
@@ -30,10 +23,9 @@ export function ProductList(props) {
     return (
         <Row>
             <Col>
-                <Card style={{ width: '100%' }}>
+                <Card >
                     <ListGroup variant="flush">
-
-                        {products.items.map((currentProduct, _) => {
+                        {products.map((currentProduct) => {
                             const { picture, title, id, price, free_shipping } = currentProduct;
                             // const { city_name } = address;
 

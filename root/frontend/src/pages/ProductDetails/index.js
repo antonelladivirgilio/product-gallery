@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { SearchBox } from '../../components/SearchBox';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 
 import { useProducts } from '../../contexts/productsContext';
@@ -17,7 +16,6 @@ export function ProductDetails() {
 
     return (
         <>
-            <SearchBox />
             <Container>
                 <Breadcrumbs />
                 <Row>

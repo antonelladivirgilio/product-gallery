@@ -30,12 +30,12 @@ export function ProductList({ ...props }) {
                     <Col>
                         <Card >
                             <ListGroup variant="flush">
-                                {products.items.map((currentProduct) => {
+                                {products.items.map((currentProduct, index) => {
                                     const { picture, title, id, price, free_shipping } = currentProduct;
                                     // const { city_name } = address;
-
+                               
                                     return (
-                                        <ListGroup.Item key={id}>
+                                        index < 4 && <ListGroup.Item key={id}>
                                             <Card border="light" onClick={() => handleProductClick(id)} style={{ cursor: 'pointer' }}>
                                                 <Row>
                                                     <Col>
@@ -65,7 +65,8 @@ export function ProductList({ ...props }) {
                                                     </Col>
                                                 </Row>
                                             </Card>
-                                        </ListGroup.Item>)
+                                        </ListGroup.Item>
+                                    )
                                 })}
                             </ListGroup>
                         </Card>

@@ -18,7 +18,7 @@ import MagnifierSmall from '../../assets/magnifier_small.png';
 export function SearchBox() {
 
     const [loading, setLoading] = useState(false);
-    const [inputValue, setInputValue] = useState();
+    const [inputValue, setInputValue] = useState('');
     const { _, setProducts } = useProducts();
     const navigate = useNavigate();
 
@@ -44,11 +44,11 @@ export function SearchBox() {
         e.preventDefault();
 
         if (inputValue) {
-            
+
             const response = await getProducts({ product: inputValue });
             const { categories, items } = response.data;
             setProducts({ categories, items });
-            
+
             navigate('/items?search=');
         }
     };

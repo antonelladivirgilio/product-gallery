@@ -1,6 +1,6 @@
 const { isObjectEmpty } = require('./isObjectEmpty');
 
-const shapeTheAnswer = (response) => {
+const shapeTheAnswerAllProducts = (response) => {
 
     if (!response) {
         return;
@@ -44,4 +44,8 @@ const shapeTheAnswer = (response) => {
     return formatedResponse;
 };
 
-module.exports = { shapeTheAnswer }
+const shapeTheAnswerProduct = (response) => {
+
+};
+
+module.exports = { shapeTheAnswerAllProducts, shapeTheAnswerProduct }

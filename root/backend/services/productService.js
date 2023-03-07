@@ -1,6 +1,6 @@
 const { response } = require("express");
 const axios = require('axios');
-const {shapeTheAnswer} = require("../utils/formatProductResponse");
+const {shapeTheAnswerAllProducts} = require("../utils/formatProductResponse");
 
 const getAllProducts = async (query) => {
 
@@ -8,7 +8,7 @@ const getAllProducts = async (query) => {
 
     const response = await axios.get(apiUrl).then(res => res.data);
     
-    const shapedAnswer = shapeTheAnswer(response);
+    const shapedAnswer = shapeTheAnswerAllProducts(response);
     return shapedAnswer;
 };
 

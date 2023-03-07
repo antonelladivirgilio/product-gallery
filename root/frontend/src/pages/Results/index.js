@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchBox } from '../../components/SearchBox';
 import { ProductList } from '../../components/ProductList';
+import { Breadcrumbs } from '../../components/Breadcrumbs';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,7 +15,7 @@ export function Results() {
             <Container>
                 <Row>
                     <Col>
-                        breadcrumbs
+                        <Breadcrumbs />
                     </Col>
                 </Row>
                 <ProductList />

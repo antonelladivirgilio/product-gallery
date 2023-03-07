@@ -69,7 +69,8 @@ const shapeTheAnswerProduct = (response) => {
             condition,
             free_shipping: shipping.free_shipping,
             sold_quantity,
-            description: plain_text
+            description: plain_text,
+            title
         }
     };
 

@@ -29,7 +29,7 @@ export function ProductDetails() {
                                     <Card.Body>
                                         <Card.Title>Descripción del producto</Card.Title>
                                         <Card.Text>
-                                            {decodeURI(description)}
+                                            {description? decodeURI(description) : "El vendedor no agregó una descripción"}
                                         </Card.Text>
                                     </Card.Body>
                                 </Col>

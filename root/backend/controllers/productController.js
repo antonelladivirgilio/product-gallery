@@ -19,7 +19,8 @@ const getAllProducts = async (request, response) => {
 
 const getProductById = async (request, response) => {
     const { id } = request.params;
-    let productById = [];
+
+    let productById = {};
 
     try {
         productById = await productServices.getProductById(id);
@@ -27,7 +28,7 @@ const getProductById = async (request, response) => {
         response
             .status(error.status || 500)
             .send({ status: "FAILED", data: { error: error.message || error } })
-    }
+    }    
 
     response.send({
         status: '200', data: productById

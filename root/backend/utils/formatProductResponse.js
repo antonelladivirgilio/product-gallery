@@ -46,6 +46,34 @@ const shapeTheAnswerAllProducts = (response) => {
 
 const shapeTheAnswerProduct = (response) => {
 
+    if (!response || response.length !== 2) {
+        return;
+    }
+
+    const { id, title, price, currency_id, thumbnail, condition, shipping, sold_quantity } = response[0];
+    const { plain_text } = response[1];
+
+    let formatedResponse = {
+        author: {
+            name: "Antonella",
+            lastname: "Di Virgilio"
+        },
+        item: {
+            id,
+            "price": {
+                currency: currency_id,
+                amount: price,
+                decimals: 0
+            },
+            picture: thumbnail,
+            condition,
+            free_shipping: shipping.free_shipping,
+            sold_quantity,
+            description: plain_text
+        }
+    };
+
+    return formatedResponse;
 };
 
 module.exports = { shapeTheAnswerAllProducts, shapeTheAnswerProduct }

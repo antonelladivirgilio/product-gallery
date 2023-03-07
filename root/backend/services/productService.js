@@ -1,13 +1,12 @@
-const { response } = require("express");
 const axios = require('axios');
-const {shapeTheAnswerAllProducts} = require("../utils/formatProductResponse");
+const { shapeTheAnswerAllProducts, shapeTheAnswerProduct } = require("../utils/formatProductResponse");
 
 const getAllProducts = async (query) => {
 
     const apiUrl = `https://api.mercadolibre.com/sites/MLA/search?q=${query}`;
 
     const response = await axios.get(apiUrl).then(res => res.data);
-    
+
     const shapedAnswer = shapeTheAnswerAllProducts(response);
     return shapedAnswer;
 };
@@ -17,25 +16,15 @@ const getProductById = async (id) => {
     const apiProductByIdUrl = `https://api.mercadolibre.com/items/${id}`;
     const apiProductDescriptionUrl = `https://api.mercadolibre.com/items/${id}/description`;
 
-    const promises = [axios.get(apiProductByIdUrl), axios.get(apiProductDescriptionUrl)];
-    try {
-        await Promise.all(promises)
-            .then((results) => {
-                let product = {};
+    const allPromise = Promise.all([
+        axios.get(apiProductByIdUrl).then(res => res.data),
+        axios.get(apiProductDescriptionUrl).then(res => res.data)
+    ]);
 
-                results.map((current, _index) => {
-                    console.log(`getProductById current ${current.data}`);
-                });
-            })
-    } catch (error) {
-        response
-            .status(error.status || 500)
-            .send({ status: "FAILED", data: { error: error.message || error } })
-    }
+    const response = await allPromise;
+    const shapedAnswer = shapeTheAnswerProduct(response);
 
-    return response;
-
-
+    return shapedAnswer;
 };
 
 module.exports = {

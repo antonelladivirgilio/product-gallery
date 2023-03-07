@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { useProducts } from '../../contexts/productsContext';
-import { getProducts, getProductById, getDescriptionByProductId } from '../../services/products';
+import { getProducts, getProductById } from '../../services/products';
 
 import Logo from '../../assets/logo.png';
 import MagnifierSmall from '../../assets/magnifier_small.png';
@@ -39,17 +39,14 @@ export function SearchBox() {
         backgroundColor: "#ffe600"
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        getProducts({ product: inputValue })
-            .then((response) => {
-                setProducts(response);
-                navigate('/items?search=');
-            })
-            .catch((error) => setError(error))
-            .finally(() => setLoading(false));
+        const response = await getProducts({ product: inputValue });
+        const { categories, items } = response.data;
+        setProducts({ categories, items });
+        navigate('/items?search=');
     };
 
     const handleInputChange = (e) => {

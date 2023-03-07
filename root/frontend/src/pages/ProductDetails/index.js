@@ -9,13 +9,12 @@ import { Container, Row, Col, Card, Button, ListGroup, Image, OverlayTrigger, To
 export function ProductDetails() {
 
     const { productSelected } = useProducts();
-    const { details, product } = productSelected;
+    const { description, picture, title, price, condition, sold_quantity } = productSelected;
 
-    const condition = {
+    const conditionTable = {
         new: 'Nuevo'
     }
 
-    // agregar decodeuri por los espacios
     return (
         <>
             <SearchBox />
@@ -26,20 +25,20 @@ export function ProductDetails() {
                         <Card style={{ width: '100%' }}>
                             <Row>
                                 <Col md={8} >
-                                    <Card.Img variant="top" src={product.secure_thumbnail} />
+                                    <Card.Img variant="top" src={picture} />
                                     <Card.Body>
                                         <Card.Title>Descripción del producto</Card.Title>
                                         <Card.Text>
-                                            {decodeURI(details.plain_text)}
+                                            {decodeURI(description)}
                                         </Card.Text>
                                     </Card.Body>
                                 </Col>
                                 <Col>
                                     <Card.Text>
-                                        {`${condition[product.condition]} - ${product.sold_quantity} vendidos`}
+                                        {`${conditionTable[condition]} - ${sold_quantity} vendidos`}
                                     </Card.Text>
-                                    <Card.Title>{product.title}</Card.Title>
-                                    <Card.Title>{product.price}</Card.Title>
+                                    <Card.Title>{title}</Card.Title>
+                                    <Card.Title>{price.amount}</Card.Title>
                                     <Button variant="primary">Comprar</Button>
                                 </Col>
                             </Row>

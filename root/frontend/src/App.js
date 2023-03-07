@@ -15,7 +15,7 @@ export function App() {
     <>      
       <Routes>
         <Route path="/" element={<Search />} errorElement={<ErrorBoundary />} />
-        <Route path="/items?search=" element={<Results />} errorElement={<ErrorBoundary />} />
+        <Route path="/items/*" element={<Results />} errorElement={<ErrorBoundary />} />
         <Route path="/items/:id" element={<ProductDetails />} errorElement={<ErrorBoundary />} />
         <Route path="*" element={<NotFound />} errorElement={<ErrorBoundary />} />
       </Routes>

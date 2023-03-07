@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { useProducts } from '../../contexts/productsContext';
-import { getProductById, getDescriptionByProductId } from '../../services/products';
+import { getProductById } from '../../services/products';
 
 import { Row, Col, Card, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -20,26 +20,11 @@ export function ProductList(props) {
     const handleProductClick = async (productId) => {
         setLoading(true);
 
-        await Promise.all([
-            getProductById({ id: productId }),
-            getDescriptionByProductId({ id: productId })
-        ])
-            .then((results) => {
-                let productUpdated = {
-                    product: {},
-                    details: {}
-                };
+        const response = await getProductById({ id: productId });
 
-                results.map((current, index) => {
-                    if (index === 0) productUpdated['product'] = current;
-                    if (index === 1) productUpdated['details'] = current;
-                });
-
-                setProductSelected(productUpdated);
-                navigate(`/items/${productId}`);
-            })
-            .catch(error => setError(error))
-            .finally(() => setLoading(false));
+        const {item} = response.data;
+        setProductSelected(item);
+        navigate(`/items/${productId}`);
     };
 
     return (
@@ -48,21 +33,20 @@ export function ProductList(props) {
                 <Card style={{ width: '100%' }}>
                     <ListGroup variant="flush">
 
-                        {products.map((currentProduct, _) => {
-                            const { thumbnail, title, id, price, shipping, address } = currentProduct;
-                            const { free_shipping } = shipping;
-                            const { city_name } = address;
+                        {products.items.map((currentProduct, _) => {
+                            const { picture, title, id, price, free_shipping } = currentProduct;
+                            // const { city_name } = address;
 
                             return (
                                 <ListGroup.Item key={id}>
                                     <Card border="light" onClick={() => handleProductClick(id)} style={{ cursor: 'pointer' }}>
                                         <Row>
                                             <Col>
-                                                <Image rounded src={thumbnail} alt={title} />
+                                                <Image rounded src={picture} alt={title} />
                                             </Col>
                                             <Col lg={8} sm={12}>
                                                 <Card.Title>
-                                                    $ {price}
+                                                    $ {price.amount}
                                                     {
                                                         free_shipping &&
                                                         <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Este producto tiene envio gratis</Tooltip>}>
@@ -80,7 +64,7 @@ export function ProductList(props) {
                                                 </Card.Text>
                                             </Col>
                                             <Col lg={2} sm={12}>
-                                                {city_name}
+                                                {/* {city_name} */}
                                             </Col>
                                         </Row>
                                     </Card>

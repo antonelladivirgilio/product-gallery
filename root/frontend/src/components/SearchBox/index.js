@@ -46,7 +46,7 @@ export function SearchBox() {
         getProducts({ product: inputValue })
             .then((response) => {
                 setProducts(response);
-                navigate('/items');
+                navigate('/items?search=');
             })
             .catch((error) => setError(error))
             .finally(() => setLoading(false));

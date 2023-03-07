@@ -53,6 +53,8 @@ export function SearchBox() {
         }
     };
 
+    const handleLogoClick = () => navigate('/');
+
     return (
         <Container fluid className="search-box-container" style={containerStyles}>
             <Row>
@@ -60,7 +62,7 @@ export function SearchBox() {
                     <Container>
                         <Row>
                             <Col sm="auto">
-                                <div style={searchBoxNavHomeLink} role="img"></div>
+                                <div style={searchBoxNavHomeLink} role="img" onClick={handleLogoClick}></div>
                             </Col>
                             <Col>
                                 <Form onSubmit={handleSubmit} >

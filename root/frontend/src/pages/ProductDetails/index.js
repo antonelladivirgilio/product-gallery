@@ -12,7 +12,8 @@ export function ProductDetails() {
     const { description, picture, title, price, condition, sold_quantity } = productSelected;
 
     const conditionTable = {
-        new: 'Nuevo'
+        new: 'Nuevo',
+        used: 'Usado'
     }
 
     return (

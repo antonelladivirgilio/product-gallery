@@ -1,13 +1,21 @@
 @use '../../scss/abstracts/variables.module.scss' as variables;
 
+
 .container_breadcrumbs {
-    margin: variables.$margin-16 variables.$margin-0;
+    margin: 16px 0 0;
+    padding: 0;
 
-    ol {
-        margin: variables.$margin-0;
+    .breadcrumb_item {        
+        font-size: variables.$size-14;
+        display: inline-block;
 
-        li {
-            font-size: variables.$size-14;
+        a {
+            color: variables.$gray-6;
+        }
+
+        .breadcrumb_chevron {
+            max-width: 10px;
+            margin: 0 4px;
         }
     }
 }

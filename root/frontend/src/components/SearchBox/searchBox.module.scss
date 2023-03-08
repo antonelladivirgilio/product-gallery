@@ -1,0 +1,9 @@
+@use '../../scss/abstracts/variables.module.scss' as variables;
+
+.container_styles {
+    background-color: variables.$yellow;
+
+    .input {
+        font-size: 18px;
+    }
+}

@@ -30,44 +30,47 @@ export function ProductList({ ...props }) {
                 !isObjectEmpty(products) &&
                 <Row>
                     <Col>
-                        <Card>
-                            <ListGroup variant="flush"  >
+                        <Card bsPrefix={styles.container}>
+                            <ol>
                                 {products.items.map((currentProduct, index) => {
                                     const { picture, title, id, price, free_shipping } = currentProduct;
+
                                     return (
-                                        index < 4 && <ListGroup.Item key={id} bsPrefix={styles.padding_reset}>
-                                            <Card border="light" onClick={() => handleProductClick(id)} className={styles.card_container}>
-                                                <Container fluid bsPrefix={styles.padding_reset}>
-                                                    <Row className={styles.padding_reset}>
-                                                        <Col>
-                                                            <Image className={styles.card_image} src={picture} alt={title} loading="lazy" />
-                                                        </Col>
-                                                        <Col lg={9} sm={12}>
-                                                            <Card.Title>
-                                                                <span className={styles.card_title_price}>$ {price.amount}</span>
+                                        index < 4 &&
+                                        <li onClick={() => handleProductClick(id)} key={id} className={styles.container_product}>
+                                            <Container fluid>
+                                                <Row>
+                                                    <Col lg={3} md={4} xs={6}>
+                                                        <Image className={styles.card_image} src={picture} alt={title} loading="lazy" />
+                                                    </Col>
+                                                    <Col>
+                                                        <Row>
+                                                            <Col>
+                                                                <span className={styles.card_price}>$ {price.amount}</span>
                                                                 {
                                                                     free_shipping &&
                                                                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Este producto tiene envio gratis</Tooltip>}>
-                                                                        <span className="d-inline-block">
+                                                                        <span className={`${styles.card_free_shipping_image} d-inline-block`}>
                                                                             <Image
                                                                                 ref={shippingTooltipImgRef}
-                                                                                roundedCircle
                                                                                 src={shippingImg} />
                                                                         </span>
                                                                     </OverlayTrigger>
                                                                 }
-                                                            </Card.Title>
-                                                            <Card.Text bsPrefix={styles.card_description}>
-                                                                {title}
-                                                            </Card.Text>
-                                                        </Col>                                                      
-                                                    </Row>
-                                                </Container>
-                                            </Card>
-                                        </ListGroup.Item>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <span className={styles.card_description}>{title}</span>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                            </Container>
+                                        </li>
                                     )
                                 })}
-                            </ListGroup>
+                            </ol>
                         </Card>
                     </Col>
                 </Row>

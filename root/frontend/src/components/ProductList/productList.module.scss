@@ -1,26 +1,62 @@
 @use '../../scss/abstracts/variables.module.scss' as variables;
+@use '../../scss/abstracts/mixins.module.scss' as mixins;
 
-.padding_reset {
-    padding: 0;
+.container {
+    background-color: variables.$white;
+    border-radius: 4px;
+    margin: 16px 0 32px;
+
+    ol {
+        margin: 0;
+        padding: 0;
+
+        li {
+            &.container_product {
+                cursor: pointer;
+                border-bottom: thin solid variables.$gray-e;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
 }
 
-.card_container {
-    cursor: pointer;
+.container_product {
 
     .card_image {
-        width: 180px;
-        height: 180px;
         margin: 16px;
         border-radius: 4px;
+
+        @include mixins.sm {
+            width: 180px;
+            height: 180px;
+        }
     }
 
-    .card_title_price {
+    .card_price {
         display: inline-block;
-        margin: 32px 10px 0;
-        font-size: 24px;
+        margin: 12px 10px 0 0;
+        font-size: 16px;
+
+        .card_free_shipping_image {
+            vertical-align: super;
+        }
+
+        @include mixins.sm {
+            margin: 32px 10px 0 0;
+            font-size: 24px;
+        }
     }
 
     .card_description {
-        font-size: 18px;
+        display: inline-block;
+        font-size: 16px;
+
+        @include mixins.sm {
+            font-size: 18px;
+            margin: 32px 0 0;
+        }
     }
 }

@@ -13,7 +13,12 @@ export const getProductById = async ({ id }) => {
 
     const apiUrl = `${process.env.REACT_APP_BASE_URL}/items/${id}`;
 
-    const response = await axios.get(apiUrl).then(res => res.data);
-   
-    return response;
+    // cancel the request
+    const cancelGetProductById = new AbortController();
+
+    const response = await axios.get(apiUrl, {
+        signal: cancelGetProductById.signal
+    }).then(res => res.data);
+
+    return { response, cancelGetProductById };
 }

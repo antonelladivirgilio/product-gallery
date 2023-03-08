@@ -17,7 +17,7 @@ export function ProductList() {
     const navigate = useNavigate();
 
     const handleProductClick = useCallback(async (productId) => {
-        const response = await getProductById({ id: productId });
+        const { response } = await getProductById({ id: productId });
 
         const { item } = response.data;
         setProductSelected(item);

@@ -6,6 +6,8 @@ import { useProducts } from '../../contexts/productsContext';
 import { Container, Row, Col, Card, Button, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { isObjectEmpty } from '../../utilities/isObjectEmpty';
 
+import styles from './productDetails.module.scss';
+
 export function ProductDetails() {
 
     const { productSelected } = useProducts();
@@ -16,6 +18,8 @@ export function ProductDetails() {
         used: 'Usado'
     }
 
+    const showHeaderSubtitle = sold_quantity && sold_quantity > 0;
+
     return (
         <>
             {
@@ -24,26 +28,35 @@ export function ProductDetails() {
                     <Breadcrumbs />
                     <Row>
                         <Col>
-                            <Card style={{ width: '100%' }}>
-                                <Row>
-                                    <Col md={8} >
-                                        <Card.Img variant="top" src={picture} />
-                                        <Card.Body>
-                                            <Card.Title>Descripción del producto</Card.Title>
-                                            <Card.Text>
-                                                {description ? decodeURI(description) : "El vendedor no agregó una descripción"}
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Col>
-                                    <Col>
-                                        <Card.Text>
-                                            {`${conditionTable[condition]} - ${sold_quantity} vendidos`}
-                                        </Card.Text>
-                                        <Card.Title>{title}</Card.Title>
-                                        <Card.Title>{price.amount}</Card.Title>
-                                        <Button variant="primary">Comprar</Button>
-                                    </Col>
-                                </Row>
+                            <Card bsPrefix={styles.container}>
+                                <Container>
+                                    <Row>
+                                        <Col md={8} xs={6} >
+                                            <Row>
+                                                <Col>
+                                                    <Image className={styles.card_image} src={picture} alt={title} loading="lazy" />
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col md={4} xs={6} className={styles.right_container}>
+                                            <span className={styles.header_subtitle}>
+                                                {`${conditionTable[condition]}`}
+                                                {showHeaderSubtitle && ` - ${sold_quantity} vendidos `}
+                                            </span>
+                                            <h1 className={styles.product_title}>{title}</h1>
+                                            <p className={styles.product_price}>$ {price.amount}</p>
+                                            <div className='d-grid'>
+                                                <Button variant="primary" className={styles.product_buy_btn}>Comprar</Button>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={8}>
+                                            <h2 className={styles.description_title}>Descripción del producto</h2>
+                                            <p className={styles.description_content}>{description ? description : "El vendedor no agregó una descripción"}</p>
+                                        </Col>
+                                    </Row>
+                                </Container>
                             </Card>
                         </Col>
                     </Row>

@@ -16,9 +16,7 @@ export function ProductDetails() {
     const conditionTable = {
         new: 'Nuevo',
         used: 'Usado'
-    }
-
-    const showHeaderSubtitle = sold_quantity && sold_quantity > 0;
+    }  
 
     return (
         <>
@@ -41,7 +39,7 @@ export function ProductDetails() {
                                         <Col md={4} xs={6} className={styles.right_container}>
                                             <span className={styles.header_subtitle}>
                                                 {`${conditionTable[condition]}`}
-                                                {showHeaderSubtitle && ` - ${sold_quantity} vendidos `}
+                                                {sold_quantity > 0 && ` - ${sold_quantity} vendidos`}
                                             </span>
                                             <h1 className={styles.product_title}>{title}</h1>
                                             <p className={styles.product_price}>$ {price.amount}</p>

@@ -1,13 +1,24 @@
-import { SearchBox } from "./components/SearchBox";
-
 import { Outlet } from "react-router-dom";
+
+import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { SearchBox } from "./components/SearchBox";
+import './scss/main.scss';
 
 export function App() {
   return (
-    <>
-      <SearchBox />
-      <Outlet />
-    </>
+    <Container fluid>
+      <Row>
+        <Col>
+          <SearchBox />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Outlet />
+        </Col>
+      </Row>
+    </Container>
   )
 }

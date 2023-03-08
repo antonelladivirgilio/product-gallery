@@ -48,7 +48,7 @@ export function SearchBox() {
             <Col>
                 <Container>
                     <Row>
-                        <Col sm="auto">
+                        <Col md="1" sm="2" xs="3">
                             <Image onClick={handleLogoClick} className={styles.nav_logo} src={Logo} alt='Logo de MercadoLibre' loading="lazy" />
                         </Col>
                         <Col>

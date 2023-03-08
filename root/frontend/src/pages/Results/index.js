@@ -9,15 +9,13 @@ import Col from 'react-bootstrap/Col';
 export function Results() {
 
     return (
-        <>
-            <Container>
-                <Row>
-                    <Col>
-                        <Breadcrumbs />
-                    </Col>
-                </Row>
-                <ProductList />
-            </Container>
-        </>
+        <Container>
+            <Row>
+                <Col>
+                    <Breadcrumbs />
+                </Col>
+            </Row>
+            <ProductList />
+        </Container>
     );
 }

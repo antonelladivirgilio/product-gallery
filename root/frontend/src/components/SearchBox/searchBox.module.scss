@@ -3,7 +3,20 @@
 .container_styles {
     background-color: variables.$yellow;
 
-    .input {
-        font-size: variables.$size-18;
+    .nav_logo {
+        max-height: 34px;
+        margin: 12px 0;
+    }
+
+    .form_input {
+        font-size: 18px;
+        margin: 12px 0;
+        border: none;
+    }
+
+    .form_button {
+        margin: 12px 0;
+        background-color: variables.$gray-e;
+        border: none;
     }
 }

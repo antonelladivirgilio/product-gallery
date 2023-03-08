@@ -49,19 +49,19 @@ export function SearchBox() {
                 <Container>
                     <Row>
                         <Col sm="auto">
-                            <Image onClick={handleLogoClick} rounded src={Logo} alt='Logo de MercadoLibre' loading="lazy" />
+                            <Image onClick={handleLogoClick} className={styles.nav_logo} src={Logo} alt='Logo de MercadoLibre' loading="lazy" />
                         </Col>
                         <Col>
                             <Form onSubmit={handleSubmit} >
-                                <InputGroup className="mb-3">
+                                <InputGroup >
                                     <Form.Control
                                         placeholder="Nunca dejes de buscar"
                                         aria-label="Nunca dejes de buscar"
                                         aria-describedby="button-search"
-                                        onChange={handleInputChange}
-                                        className={styles.input}
+                                        onChange={handleInputChange}    
+                                        className={styles.form_input}   
                                     />
-                                    <Button type="submit" disabled={isCallingService} variant="light" id="button-search">
+                                    <Button type="submit" disabled={isCallingService} className={styles.form_button}  variant="light" id="button-search">
                                         <Image rounded src={MagnifierSmall} alt='lupa' loading="lazy" />
                                     </Button>
                                 </InputGroup>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 
-import { useProducts } from '../../contexts/productsContext';
+import { useProductsContext } from '../../contexts/productsContext';
 
 import { Container, Row, Col, Card, Button, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { isObjectEmpty } from '../../utilities/isObjectEmpty';
@@ -10,7 +10,7 @@ import styles from './productDetails.module.scss';
 
 export function ProductDetails() {
 
-    const { productSelected } = useProducts();
+    const { productSelected } = useProductsContext();
     const { description, picture, title, price, condition, sold_quantity } = productSelected;
 
     const conditionTable = {

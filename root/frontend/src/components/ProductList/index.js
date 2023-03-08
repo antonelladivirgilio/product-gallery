@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 import { getProductById } from '../../services/products';
 
-import { Container, Row, Col, Card, ListGroup, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useProducts } from '../../contexts/productsContext';
+import { Container, Row, Col, Card, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useProductsContext } from '../../contexts/productsContext';
 import shippingImg from '../../assets/ic_shipping_small.png';
 
 import { isObjectEmpty } from '../../utilities/isObjectEmpty';
 
 import styles from './productList.module.scss';
 
-export function ProductList({ ...props }) {
-    const { products, setProductSelected } = useProducts();
+export function ProductList() {
+    const { products, setProductSelected } = useProductsContext();
     const shippingTooltipImgRef = useRef();
     const navigate = useNavigate();
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useProducts } from '../../contexts/productsContext';
+import { useProductsContext } from '../../contexts/productsContext';
 import { isObjectEmpty } from '../../utilities/isObjectEmpty';
 
 import breadcrumbChevron from '../../assets/breadcrumb_chevron.png';
@@ -9,7 +9,7 @@ import styles from './breadcrumbs.module.scss';
 
 export function Breadcrumbs({ ...props }) {
 
-    const { products } = useProducts();
+    const { products } = useProductsContext();
     const { categories } = products;
 
     const showBreadcrumbs = categories && categories.length > 0;

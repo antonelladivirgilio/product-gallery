@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Col, Form, Image, InputGroup, Button } from 'react-bootstrap';
 
-import { useProducts } from '../../contexts/productsContext';
+import { useProductsContext } from '../../contexts/productsContext';
 import { getProducts } from '../../services/products';
 
 import Logo from '../../assets/logo.png';
@@ -16,7 +16,7 @@ export function SearchBox() {
 
     const [inputValue, setInputValue] = useState('');
     const [isCallingService, setIsCallingService] = useState(false);
-    const { _, setProducts } = useProducts();
+    const { _, setProducts } = useProductsContext();
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {

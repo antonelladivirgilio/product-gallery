@@ -4,7 +4,9 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useProducts } from '../../contexts/productsContext';
 import { isObjectEmpty } from '../../utilities/isObjectEmpty';
 
-export function Breadcrumbs({...props }) {
+import styles from './breadcrumbs.module.scss';
+
+export function Breadcrumbs({ ...props }) {
 
     const { products } = useProducts();
     const { categories } = products;
@@ -15,7 +17,7 @@ export function Breadcrumbs({...props }) {
         <>
             {
                 !isObjectEmpty(products) && showBreadcrumbs && (
-                    < Breadcrumb >
+                    < Breadcrumb className={styles.container_breadcrumbs}>
                         {categories.map((category, index) => <Breadcrumb.Item href="#" key={`category_${index}`}>{category}</Breadcrumb.Item>)}
                     </Breadcrumb >
                 )

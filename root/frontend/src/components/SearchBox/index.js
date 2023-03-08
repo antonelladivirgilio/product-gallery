@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col, Form, Image, InputGroup, Button } from 'react-bootstrap';
 
 import { useProducts } from '../../contexts/productsContext';
 import { getProducts } from '../../services/products';
@@ -17,24 +12,9 @@ import MagnifierSmall from '../../assets/magnifier_small.png';
 
 export function SearchBox() {
 
-    const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const { _, setProducts } = useProducts();
     const navigate = useNavigate();
-
-    const searchBoxNavHomeLink = {
-        display: "inline-block",
-        backgroundImage: `url(${Logo})`,
-        width: "50px",
-        height: "50px",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "contain"
-    };
-
-    const containerStyles = {
-        backgroundColor: "#ffe600"
-    };
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -56,31 +36,25 @@ export function SearchBox() {
     const handleLogoClick = () => navigate('/');
 
     return (
-        <Container fluid className="search-box-container" style={containerStyles}>
+        <Container>
             <Row>
+                <Col sm="auto">
+                    <Image onClick={handleLogoClick} rounded src={Logo} alt='Logo de MercadoLibre' loading="lazy" />
+                </Col>
                 <Col>
-                    <Container>
-                        <Row>
-                            <Col sm="auto">
-                                <div style={searchBoxNavHomeLink} role="img" onClick={handleLogoClick}></div>
-                            </Col>
-                            <Col>
-                                <Form onSubmit={handleSubmit} >
-                                    <InputGroup className="mb-3">
-                                        <Form.Control
-                                            placeholder="Nunca dejes de buscar"
-                                            aria-label="Nunca dejes de buscar"
-                                            aria-describedby="button-search"
-                                            onChange={handleInputChange}
-                                        />
-                                        <Button type="submit" variant="secondary" id="button-search">
-                                            <img src={MagnifierSmall}></img>
-                                        </Button>
-                                    </InputGroup>
-                                </Form>
-                            </Col>
-                        </Row>
-                    </Container>
+                    <Form onSubmit={handleSubmit} >
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                placeholder="Nunca dejes de buscar"
+                                aria-label="Nunca dejes de buscar"
+                                aria-describedby="button-search"
+                                onChange={handleInputChange}
+                            />
+                            <Button type="submit" variant="secondary" id="button-search">                                
+                                <Image rounded src={MagnifierSmall} alt='lupa' loading="lazy" />
+                            </Button>
+                        </InputGroup>
+                    </Form>
                 </Col>
             </Row>
         </Container>

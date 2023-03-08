@@ -9,11 +9,7 @@ import './scss/main.scss';
 export function App() {
   return (
     <Container fluid>
-      <Row>
-        <Col>
-          <SearchBox />
-        </Col>
-      </Row>
+      <SearchBox />
       <Row>
         <Col>
           <Outlet />

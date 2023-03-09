@@ -66,9 +66,6 @@ ____
 - **Frontend**
 	- root -> Backend -> ```npm start```
 	
-	
+> **_NOTA:_**  Se puede buildear la app ejecutando el comando ```npm run build``` dentro de la carpeta Frontend. El Front se conecta al BFF de desarrollo. Por esto es importante tener el servidor levantado como se explica arriba.
+
 ## Gracias! 😁
-	
-	
-	
-	

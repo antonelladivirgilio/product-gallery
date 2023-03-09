@@ -11,8 +11,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-// import Root, { rootLoader } from "./routes/root";
-
 import { CategoryProvider } from './contexts/categoryContext';
 
 import { App } from './App';
@@ -35,26 +33,25 @@ const router = createBrowserRouter([
       }, {
         path: "/items/:id",
         element: <ProductDetails />,
-        errorElement: <ErrorBoundary />,
-        // loader: rootLoader
+        errorElement: <ErrorBoundary />
       },
       {
         path: "*",
         element: <NotFound />,
-        errorElement: <ErrorBoundary />,
-        // loader: rootLoader
+        errorElement: <ErrorBoundary />
       },
     ],
-    // loader: rootLoader
   }
 ]);
 
 const Memorized = React.memo(() => {
-  return (<>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
-  </>)
+  return (
+    <>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+    </>
+  )
 });
 
 root.render(

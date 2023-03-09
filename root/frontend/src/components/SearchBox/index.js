@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,7 @@ import styles from './searchBox.module.scss';
 export function SearchBox() {
 
     const [inputValue, setInputValue] = useState('');
-    const [isCallingService, setIsCallingService] = useState(false);
+    const [disableButton, setDisableButton] = useState(false);
     const { _, setProducts } = useProductsContext();
     const navigate = useNavigate();
 
@@ -28,20 +28,20 @@ export function SearchBox() {
 
         if (inputValue) {
 
-            setIsCallingService(true);
+            setDisableButton(true);
             try {
                 const response = await getProducts({ product: inputValue });
                 const { categories, items } = response.data;
                 setProducts({ categories, items });
-                setIsCallingService(false);
+                setDisableButton(false);
                 navigate('/items?search=');
             } catch (error) {
-                setIsCallingService(false);
+                setDisableButton(false);
             }
         }
     };
 
-    const handleLogoClick = () => navigate('/');
+    const handleLogoClick = useCallback(() => navigate('/'), []);
 
     return (
         <Row className={styles.container_styles}>
@@ -58,10 +58,10 @@ export function SearchBox() {
                                         placeholder="Nunca dejes de buscar"
                                         aria-label="Nunca dejes de buscar"
                                         aria-describedby="button-search"
-                                        onChange={handleInputChange}    
-                                        className={styles.form_input}   
+                                        onChange={handleInputChange}
+                                        className={styles.form_input}
                                     />
-                                    <Button type="submit" disabled={isCallingService} className={styles.form_button}  variant="light" id="button-search">
+                                    <Button type="submit" disabled={disableButton} className={styles.form_button} variant="light" id="button-search">
                                         <Image rounded src={MagnifierSmall} alt='lupa' loading="lazy" />
                                     </Button>
                                 </InputGroup>

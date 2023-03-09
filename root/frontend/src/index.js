@@ -13,7 +13,7 @@ import {
 
 // import Root, { rootLoader } from "./routes/root";
 
-import { ProductsProvider } from './contexts/productsContext';
+import { CategoryProvider } from './contexts/categoryContext';
 
 import { App } from './App';
 
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
     children: [
       {
-        path: "/items/*",
+        path: "/items",
         element: <Results />,
         errorElement: <ErrorBoundary />,
       }, {
@@ -59,9 +59,9 @@ const Memorized = React.memo(() => {
 
 root.render(
   <React.StrictMode>
-    <ProductsProvider>
+    <CategoryProvider>
       <Memorized />
-    </ProductsProvider>
+    </CategoryProvider>
   </React.StrictMode>
 );
 

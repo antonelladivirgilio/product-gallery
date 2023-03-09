@@ -1,16 +1,8 @@
-import React from 'react';
-
-import { useProductsContext } from '../../contexts/productsContext';
-import { isObjectEmpty } from '../../utilities/isObjectEmpty';
-
 import breadcrumbChevron from '../../assets/breadcrumb_chevron.png';
 
 import styles from './breadcrumbs.module.scss';
 
-export function Breadcrumbs() {
-
-    const { products } = useProductsContext();
-    const { categories } = products;
+export function Breadcrumbs({ categories }) {
 
     const showBreadcrumbs = categories && categories.length > 0;
     const showChevron = categories.length - 1;
@@ -18,7 +10,7 @@ export function Breadcrumbs() {
     return (
         <>
             {
-                !isObjectEmpty(products) && showBreadcrumbs && (
+                showBreadcrumbs && (
                     <ol className={styles.container_breadcrumbs}>
                         {
                             categories.map((category, index) => {
@@ -26,7 +18,7 @@ export function Breadcrumbs() {
                                 return (
                                     <li key={`category_${index}`} className={styles.breadcrumb_item}>
                                         <a href="#">{category}</a>
-                                        {index !== showChevron && <img className={styles.breadcrumb_chevron} src={breadcrumbChevron} />}
+                                        {index !== showChevron && <img className={styles.breadcrumb_chevron} src={breadcrumbChevron} alt="flecha que apunta hacia la derecha" />}
                                     </li>
                                 )
                             })

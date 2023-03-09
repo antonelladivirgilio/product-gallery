@@ -1,11 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Col, Form, Image, InputGroup, Button } from 'react-bootstrap';
-
-import { useProductsContext } from '../../contexts/productsContext';
-import { getProducts } from '../../services/products';
 
 import Logo from '../../assets/logo.png';
 import MagnifierSmall from '../../assets/magnifier_small.png';
@@ -15,33 +12,21 @@ import styles from './searchBox.module.scss';
 export function SearchBox() {
 
     const [inputValue, setInputValue] = useState('');
-    const [disableButton, setDisableButton] = useState(false);
-    const { _, setProducts } = useProductsContext();
+    const [disableButton, _setDisableButton] = useState(false);
+
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (inputValue) {
-
-            setDisableButton(true);
-            try {
-                const response = await getProducts({ product: inputValue });
-                const { categories, items } = response.data;
-                setProducts({ categories, items });
-                setDisableButton(false);
-                navigate('/items?search=');
-            } catch (error) {
-                setDisableButton(false);
-            }
-        }
+        navigate(`/items?search=${encodeURI(inputValue)}`, { state: encodeURI(inputValue) });
     };
 
-    const handleLogoClick = useCallback(() => navigate('/'), []);
+    const handleLogoClick = useCallback(() => navigate('/'), [navigate]);
 
     return (
         <Row className={styles.container_styles}>

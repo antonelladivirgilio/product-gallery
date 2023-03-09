@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from "react-router-dom";
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 
+import { useCategoryContext } from '../../contexts/categoryContext';
 import { getProductById } from '../../services/products';
 
 import { Container, Row, Col, Card, Button, Image } from 'react-bootstrap';
@@ -13,6 +14,7 @@ export function ProductDetails() {
 
     let { id } = useParams();
     const [product, setProduct] = useState({});
+    const { categories } = useCategoryContext();
 
     const conditionTable = {
         new: 'Nuevo',
@@ -20,24 +22,31 @@ export function ProductDetails() {
     };
 
     const callService = useCallback(async (id) => {
-        const { response, cancelGetProductById } = await getProductById(id);
 
-        const { item } = response.data;
-        setProduct(item);
+        if (id) {
+            try {
+                const { response, cancelGetProductById } = await getProductById(id);
+                const { item } = response.data;
+                setProduct(item);
 
-        return cancelGetProductById.abort();
-    }, [id])
+                return cancelGetProductById.abort();
+            }
+            catch (error) {
+
+            }
+        }
+    }, []);
 
     useEffect(() => {
         callService(id);
-    }, [id]);
+    }, [id, callService]);
 
     return (
         <>
             {
                 !isObjectEmpty(product) &&
                 <Container>
-                    <Breadcrumbs />
+                    <Breadcrumbs categories={categories} />
                     <Row>
                         <Col>
                             <Card bsPrefix={styles.container}>

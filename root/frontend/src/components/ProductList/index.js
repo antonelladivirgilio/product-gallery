@@ -1,32 +1,30 @@
-import React, { useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { Container, Row, Col, Card, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useProductsContext } from '../../contexts/productsContext';
 import shippingImg from '../../assets/ic_shipping_small.png';
-
-import { isObjectEmpty } from '../../utilities/isObjectEmpty';
 
 import styles from './productList.module.scss';
 
-export function ProductList() {
-    const { products } = useProductsContext();
+export function ProductList({ products }) {
+
     const shippingTooltipImgRef = useRef();
     const navigate = useNavigate();
 
     const handleProductClick = useCallback((productId) => {
         navigate(`/items/${productId}`);
-    }, []);
+    }, [navigate]);
 
+    const showList = products && products.length > 0;
     return (
         <>
             {
-                !isObjectEmpty(products) &&
+                showList &&
                 <Row>
                     <Col>
                         <Card bsPrefix={styles.container}>
                             <ol>
-                                {products.items.map((currentProduct, index) => {
+                                {products.map((currentProduct, index) => {
                                     const { picture, title, id, price, free_shipping } = currentProduct;
 
                                     return (
@@ -47,7 +45,7 @@ export function ProductList() {
                                                                         <span className={`${styles.card_free_shipping_image} d-inline-block`}>
                                                                             <Image
                                                                                 ref={shippingTooltipImgRef}
-                                                                                src={shippingImg} 
+                                                                                src={shippingImg}
                                                                                 loading="lazy" />
                                                                         </span>
                                                                     </OverlayTrigger>

@@ -1,8 +1,6 @@
 import React, { useRef, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { getProductById } from '../../services/products';
-
 import { Container, Row, Col, Card, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useProductsContext } from '../../contexts/productsContext';
 import shippingImg from '../../assets/ic_shipping_small.png';
@@ -12,17 +10,13 @@ import { isObjectEmpty } from '../../utilities/isObjectEmpty';
 import styles from './productList.module.scss';
 
 export function ProductList() {
-    const { products, setProductSelected } = useProductsContext();
+    const { products } = useProductsContext();
     const shippingTooltipImgRef = useRef();
     const navigate = useNavigate();
 
-    const handleProductClick = useCallback(async (productId) => {
-        const { response } = await getProductById({ id: productId });
-
-        const { item } = response.data;
-        setProductSelected(item);
+    const handleProductClick = useCallback((productId) => {        
         navigate(`/items/${productId}`);
-    }, [products]);
+    }, []);
 
     return (
         <>

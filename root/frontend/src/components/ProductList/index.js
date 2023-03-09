@@ -14,7 +14,7 @@ export function ProductList() {
     const shippingTooltipImgRef = useRef();
     const navigate = useNavigate();
 
-    const handleProductClick = useCallback((productId) => {        
+    const handleProductClick = useCallback((productId) => {
         navigate(`/items/${productId}`);
     }, []);
 
@@ -47,7 +47,8 @@ export function ProductList() {
                                                                         <span className={`${styles.card_free_shipping_image} d-inline-block`}>
                                                                             <Image
                                                                                 ref={shippingTooltipImgRef}
-                                                                                src={shippingImg} />
+                                                                                src={shippingImg} 
+                                                                                loading="lazy" />
                                                                         </span>
                                                                     </OverlayTrigger>
                                                                 }
@@ -55,7 +56,7 @@ export function ProductList() {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <span className={styles.card_description}>{title}</span>
+                                                                <h2 className={styles.card_description}>{title}</h2>
                                                             </Col>
                                                         </Row>
                                                     </Col>

@@ -53,6 +53,7 @@
     .card_description {
         display: inline-block;
         font-size: 16px;
+        font-weight: normal;
 
         @include mixins.sm {
             font-size: 18px;

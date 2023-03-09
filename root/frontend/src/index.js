@@ -49,12 +49,18 @@ const router = createBrowserRouter([
   }
 ]);
 
+const Memorized = React.memo(() => {
+  return (<>
+    <RouterProvider router={router}>
+      <App />
+    </RouterProvider>
+  </>)
+});
+
 root.render(
   <React.StrictMode>
     <ProductsProvider>
-      <RouterProvider router={router}>
-        <App />
-      </RouterProvider>
+      <Memorized />
     </ProductsProvider>
   </React.StrictMode>
 );
